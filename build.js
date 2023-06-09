@@ -141,7 +141,7 @@ function build(runtime, version, abi) {
     ];
 
     if (/^electron/i.test(runtime)) {
-      args.push('--dist-url=https://atom.io/download/electron');
+      args.push('--dist-url=https://electronjs.org/headers');
     }
 
     if (parseInt(abi) >= 80) {
@@ -165,7 +165,7 @@ function build(runtime, version, abi) {
     if (process.platform === 'win32') {
       if (version.split('.')[0] >= 4) {
         process.env.msvs_toolset = 15;
-        process.env.msvs_version = argv.msvs_version || 2017;
+        process.env.msvs_version = argv.msvs_version || 2022;
       } else {
         process.env.msvs_toolset = 12;
         process.env.msvs_version = 2013;
