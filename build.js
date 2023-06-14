@@ -33,8 +33,7 @@ function initBuild() {
     targets = [[argv['runtime'], argv['version'], argv['abi']]];
   } else if ('all' in argv) {
     // If "--all", use those defined in package.json
-    // targets = require('./package.json').supportedTargets;
-	targets = require('./package.json').releaseTargets;
+	targets = require('./package.json').supportedTargets;
   } else {
     const options = optionsFromPackage();
     if (process.env.npm_config_targets) {
