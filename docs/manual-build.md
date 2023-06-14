@@ -48,13 +48,13 @@ For example, to build for Electron v4.0.4, you would run:
 node build.js --runtime electron --version 4.0.4 --abi 69
 ```
 
-To see more examples of what values to use, view iohook's [package.json file](https://github.com/wilix-team/iohook/blob/master/package.json), under `supportedTargets`. The three values in each block are runtime, version and abi respectively.
+To see more examples of what values to use, view iohook's [package.json file](https://github.com/JohnJunior/iohook/blob/master/package.json), under `supportedTargets`. The three values in each block are runtime, version and abi respectively.
 
-`--runtime`, `--version` and `--abi` must all be supplied to build for a specific node version. If they are not supplied, `build.js` will build for the versions specified under `supportedTargets` in your `package.json` (again, see iohook's [package.json file](https://github.com/wilix-team/iohook/blob/master/package.json) for details).
+`--runtime`, `--version` and `--abi` must all be supplied to build for a specific node version. If they are not supplied, `build.js` will build for the versions specified under `supportedTargets` in your `package.json` (again, see iohook's [package.json file](https://github.com/JohnJunior/iohook/blob/master/package.json) for details).
 
 - `--upload=false` tells the script not to attempt to upload the built files to GitHub afterwards.
 
-- `--all` tells the script to build all supported targets. Useful for CI.
+- `--all` tells the script to build all supported targets under `supportedTargets`. Useful for CI.
 
 Typically `build.js` is used as part of iohook's CI in order to upload newly-built binaries to NPM. This is thus the default behavior of the script. To prevent this, supply the `--upload=false` flag:
 
