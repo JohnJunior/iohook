@@ -41,7 +41,14 @@ jobs:
       # Build only if version tag is not present
       - name: Build
         run: echo "npm run build -- --all --msvs_version=2022"
-        if: startsWith(github.ref, 'refs/tags/v') != true
+        if: startsWith(github.ref, 'refs/tags/v') != true && contains(matrix.os, 'windows-2019') != true
+        env:
+          ARCH: ${{ matrix.arch }}
+            
+      # Build only if version tag is not present
+      - name: Build 2019
+        run: echo "npm run build -- --all --msvs_version=2019"
+        if: startsWith(github.ref, 'refs/tags/v') != true && contains(matrix.os, 'windows-2019')
         env:
           ARCH: ${{ matrix.arch }}
 
