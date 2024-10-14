@@ -180,6 +180,7 @@ function build(runtime, version, abi) {
     }
 
     let proc = spawn(gypJsPath, args, {
+      shell: true,
       env: process.env,
     });
     proc.stdout.pipe(process.stdout);
