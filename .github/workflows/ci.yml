@@ -13,9 +13,6 @@ jobs:
       matrix:
         os: [ubuntu-20.04, ubuntu-latest, macos-latest, windows-latest]
         arch: [x86_64]
-        include:
-          - os: windows-2019
-            arch: i686
             
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} (${{matrix.arch}})
@@ -28,7 +25,7 @@ jobs:
         with:
           # Set registry to NPM instead of github packages for publication
           registry-url: 'https://registry.npmjs.org'
-          node-version: 18
+          node-version: 20
 
       - name: Setup Linux Dependencies
         if: startsWith(matrix.os, 'ubuntu')
@@ -43,34 +40,18 @@ jobs:
       - name: Install Packages
         run: npm i --ignore-scripts
 
-      # Build only if version tag is not present and os is not 'windows-2019'
+      # Build only if version tag is not present
       - name: Build
         run: npm run build -- --all --msvs_version=2022
-        if: startsWith(github.ref, 'refs/tags/v') != true && contains(matrix.os, 'windows-2019') != true
-        env:
-          ARCH: ${{ matrix.arch }}
-          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-            
-      # Build only if version tag is not present and os is 'windows-2019'
-      - name: Build 2019
-        run: npm run build -- --all --msvs_version=2019
-        if: startsWith(github.ref, 'refs/tags/v') != true && contains(matrix.os, 'windows-2019')
+        if:  startsWith(github.ref, 'refs/tags/v') != true
         env:
           ARCH: ${{ matrix.arch }}
           ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
-      # Build and publish if version tag is present and os is not 'windows-2019'
+      # Build and publish if version tag is present
       - name: Build & Publish Prebuilds
         run: npm run build:ci -- --msvs_version=2022
-        if: startsWith(github.ref, 'refs/tags/v') && contains(matrix.os, 'windows-2019') != true
-        env:
-          ARCH: ${{ matrix.arch }}
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      # Build and publish if version tag is present and os is 'windows-2019'
-      - name: Build & Publish Prebuilds 2019
-        run: npm run build:ci -- --msvs_version=2019
-        if: startsWith(github.ref, 'refs/tags/v') && contains(matrix.os, 'windows-2019')
+        if: startsWith(github.ref, 'refs/tags/v') != true
         env:
           ARCH: ${{ matrix.arch }}
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
